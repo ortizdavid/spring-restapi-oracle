@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import com.ortizdavid.restapi.entities.User;
 import com.ortizdavid.restapi.services.UserService;
 import com.ortizdavid.restapi.utils.Response;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,12 +30,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = Logger.getLogger(UserController.class);
+
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         List<User>users = userService.getAll();
         if (users.size() == 0) {
             return Response.build("Users not found!", null, 0, HttpStatus.NOT_FOUND);
         } else {
+            logger.info("Get all Users");
             return Response.build("Users found successfully!", users, users.size(), HttpStatus.OK);
         }
     }
@@ -46,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User userBody) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody User userBody) {
         User user = userService.create(userBody);
         if (user == null) {
             return Response.build("Error while creating user!", null, 0, HttpStatus.BAD_REQUEST);
@@ -56,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@RequestBody User userBody, @PathVariable Long id) {
+    public ResponseEntity<?> updateUser(@Valid @RequestBody User userBody, @PathVariable Long id) {
         User user = userService.update(userBody, id);
         if (user == null) {
             return Response.build("Error while updating user!", null, 0, HttpStatus.BAD_REQUEST);

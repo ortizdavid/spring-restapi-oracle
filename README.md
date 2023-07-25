@@ -5,6 +5,8 @@
 - Database: Oracle
 
 ## Complete REST API
+- Validations
+- Pagination
 - JWT Authentication
 - Logging
 - Tests

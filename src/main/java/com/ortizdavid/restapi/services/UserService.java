@@ -2,6 +2,8 @@ package com.ortizdavid.restapi.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import com.ortizdavid.restapi.entities.User;
 import com.ortizdavid.restapi.repositories.UserRepository;
