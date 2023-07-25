@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -24,12 +25,15 @@ public class User {
     @Column(name = "user_id")
     private long userId;
 
+    @NotBlank(message = "UserName is mandatory")
     @Column(name = "user_name")
     private String userName;
 
+    @NotBlank(message = "Password is mandatory")
     @Column(name = "password")
     private String password;
 
+    @NotBlank(message = "Active status is mandatory")
     @Column(name = "active")
     private int active;
     
