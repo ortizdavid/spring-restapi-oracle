@@ -23,26 +23,32 @@ import com.ortizdavid.restapi.utils.Response;
 
 import jakarta.validation.Valid;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+
+@Tag(name = "Users", description = "Handle Users of application")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
-
     private static final Logger logger = Logger.getLogger(UserController.class);
 
+
+    @Operation(summary = "Retrieve all users", description = "If does not found records, return an error response.")
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         List<User>users = userService.getAll();
         if (users.size() == 0) {
             return Response.build("Users not found!", null, 0, HttpStatus.NOT_FOUND);
         } else {
-            logger.info("Get all Users");
             return Response.build("Users found successfully!", users, users.size(), HttpStatus.OK);
         }
     }
 
+
+    @Operation(summary = "Retrieve an User by id", description = "If user doesn't exists, return error.")
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         User user = userService.getById(id);
@@ -53,6 +59,8 @@ public class UserController {
         }
     }
 
+
+    @Operation(summary = "Create an user", description = "Create an user passing all user data.")
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User userBody) {
         User user = userService.create(userBody);
@@ -63,6 +71,8 @@ public class UserController {
         }
     }
 
+
+    @Operation(summary = "Update an user by id", description = "Update an user passing all user data.")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @RequestBody User userBody, @PathVariable Long id) {
         User user = userService.update(userBody, id);
@@ -73,6 +83,8 @@ public class UserController {
         }
     }
 
+
+    @Operation(summary = "Delete an User by id", description = "If user doesn't exists, return error.")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         User user = userService.getById(id);
