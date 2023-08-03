@@ -35,7 +35,6 @@ public class UserController {
     private UserService userService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
-
     @Operation(summary = "Retrieve all users", description = "If does not found records, return an error response.")
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
@@ -46,7 +45,6 @@ public class UserController {
             return Response.build("Users found successfully!", users, users.size(), HttpStatus.OK);
         }
     }
-
 
     @Operation(summary = "Retrieve an User by id", description = "If user doesn't exists, return error.")
     @GetMapping("/{id}")
@@ -59,7 +57,6 @@ public class UserController {
         }
     }
 
-
     @Operation(summary = "Create an user", description = "Create an user passing all user data.")
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody User userBody) {
@@ -71,7 +68,6 @@ public class UserController {
         }
     }
 
-
     @Operation(summary = "Update an user by id", description = "Update an user passing all user data.")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@Valid @RequestBody User userBody, @PathVariable Long id) {
@@ -82,7 +78,6 @@ public class UserController {
             return Response.build("User updated successfully!", user, 1, HttpStatus.OK);
         }
     }
-
 
     @Operation(summary = "Delete an User by id", description = "If user doesn't exists, return error.")
     @DeleteMapping("/{id}")
